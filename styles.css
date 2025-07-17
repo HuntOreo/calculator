@@ -31,9 +31,16 @@ body {
   flex-direction: column;
 }
 
+button {
+  font-size: 36px;
+  padding: 20px;
+  flex: 1;
+}
+
 .screen {
   background-color: lightblue;
   flex: 1;
+  min-height: 100px;
 }
 
 .input {
@@ -41,6 +48,7 @@ body {
   flex-direction: row;
   flex: 4;
   gap: 5px;
+  
 }
 
 .input .integers {
@@ -57,8 +65,7 @@ body {
 
 .integers button {
   font-size: 36px;
-  height: 60px;
-  width: 100px;
+
   flex: 1;
 }
 
@@ -72,14 +79,9 @@ body {
 
 .operators .operator-container {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   gap: 5px;
-}
-
-.operators button {
-  font-size: 36px;
-  height: 60px;
-  min-width: 100px;
   flex: 1;
 }
 
