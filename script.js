@@ -57,17 +57,16 @@ function errorHandler(intOne, intTwo, operator) {
 }
 
 function deleteVal() {
-  const displayElms = document.querySelector('.display');
+  const displayElms = document.querySelector('.display .value');
   const displayArr = displayElms.innerText.split('');
 
   displayArr.pop();
   displayElms.innerText = displayArr.join('');
-  console.log(displayArr);
 }
 
 function renderInputs(elem) {
   const value = elem.innerText;
-  const display = document.querySelector('.display');
+  const display = document.querySelector('.display .value');
   display.innerText += value;
 }
 

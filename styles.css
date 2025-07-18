@@ -26,8 +26,7 @@ body {
 
 .calculator .container {
   display: flex;
-  min-height: 500px;
-  max-width: 1000px;
+  min-height: 500px;;
   flex-direction: column;
   gap: 5px;
 }
@@ -39,10 +38,24 @@ button {
 }
 
 .display {
+  font-size: 36px;
   background-color: lightblue;
   border-radius: 10px;
   min-height: 100px;
+  max-width: 400px;
+  display: flex;
+  align-items: center;
   flex: 1;
+}
+
+.display .wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.display .value {
+  word-break: break-all;
 }
 
 .input {
