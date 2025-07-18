@@ -57,23 +57,25 @@ function errorHandler(intOne, intTwo, operator) {
 }
 
 function deleteVal() {
-  console.log('deleted');
+  const displayElms = document.querySelector('.display');
+  const displayArr = displayElms.innerText.split('');
+
+  displayArr.pop();
+  displayElms.innerText = displayArr.join('');
+  console.log(displayArr);
 }
 
-function getInput(input) {
-  const value = input.target.innerText;
-  const numericVal = parseInt(value);
-  console.log(numericVal);
+function renderInputs(elem) {
+  const value = elem.innerText;
+  const display = document.querySelector('.display');
+  display.innerText += value;
 }
 
-function getOperator(operator) {
-  const operatorVal = operator.target.innerText;
-  console.log(operatorVal);
-}
-
-delBtn.addEventListener('click', deleteVal);
-intBtns.forEach(elem => elem.addEventListener('click', getInput));
-operatorBtns.forEach(elem => elem.addEventListener('click', getOperator))
+delBtn.addEventListener('click', (event) => deleteVal(event.target));
+intBtns.forEach(elem =>
+  elem.addEventListener('click', (event) => renderInputs(event.target)));
+operatorBtns.forEach(elem =>
+  elem.addEventListener('click', (event) => renderInputs(event.target)))
 
 console.log('add: ' + calculate(1, 2, '+'));
 console.log('subtract: ' + calculate(5, 3, '-'));

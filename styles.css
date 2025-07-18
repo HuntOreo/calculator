@@ -38,7 +38,7 @@ button {
   flex: 1;
 }
 
-.screen {
+.display {
   background-color: lightblue;
   border-radius: 10px;
   min-height: 100px;
