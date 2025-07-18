@@ -1,3 +1,7 @@
+const delBtn = document.querySelector('.del');
+const intBtns = document.querySelectorAll('.int');
+const operatorBtns = document.querySelectorAll('.operator');
+
 function calculate(intOne, intTwo, operator) {
   try {
     errorHandler(intOne, intTwo, operator);
@@ -51,6 +55,25 @@ function errorHandler(intOne, intTwo, operator) {
     throw invalidTypeErr;
   }
 }
+
+function deleteVal() {
+  console.log('deleted');
+}
+
+function getInput(input) {
+  const value = input.target.innerText;
+  const numericVal = parseInt(value);
+  console.log(numericVal);
+}
+
+function getOperator(operator) {
+  const operatorVal = operator.target.innerText;
+  console.log(operatorVal);
+}
+
+delBtn.addEventListener('click', deleteVal);
+intBtns.forEach(elem => elem.addEventListener('click', getInput));
+operatorBtns.forEach(elem => elem.addEventListener('click', getOperator))
 
 console.log('add: ' + calculate(1, 2, '+'));
 console.log('subtract: ' + calculate(5, 3, '-'));
