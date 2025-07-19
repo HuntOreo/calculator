@@ -2,6 +2,20 @@ const delBtn = document.querySelector('.del');
 const intBtns = document.querySelectorAll('.int');
 const operatorBtns = document.querySelectorAll('.operator');
 
+function betterCalc(input) {
+
+  const inputStr = "1+23*5-3";
+  const inputArr = inputStr.split('');
+  console.log('inputArr')
+  // receive input string
+  // convert string into an array
+  // search for each operator
+  // When the operator is found, grab the Operands
+  // store expression into an object, then store into array
+  // send each object to its relevant function
+  // finally combine the results into a a single int.
+}
+
 function calculate(intOne, intTwo, operator) {
   try {
     errorHandler(intOne, intTwo, operator);
@@ -74,7 +88,11 @@ delBtn.addEventListener('click', (event) => deleteVal(event.target));
 intBtns.forEach(elem =>
   elem.addEventListener('click', (event) => renderInputs(event.target)));
 operatorBtns.forEach(elem =>
-  elem.addEventListener('click', (event) => renderInputs(event.target)))
+  elem.addEventListener('click', (event) => {
+    if (!event.target.classList.contains('equal')) {
+      renderInputs(event.target);
+    };
+  }))
 
 console.log('add: ' + calculate(1, 2, '+'));
 console.log('subtract: ' + calculate(5, 3, '-'));
