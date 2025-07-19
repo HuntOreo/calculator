@@ -1,40 +1,133 @@
 const delBtn = document.querySelector('.del');
 const intBtns = document.querySelectorAll('.int');
 const operatorBtns = document.querySelectorAll('.operator');
+let expression = "0";
 
 function betterCalc(input) {
-
-  const inputStr = "1+23*5-3";
+  const inputStr = input;
   const inputArr = inputStr.split('');
-  console.log('inputArr')
-  // receive input string
-  // convert string into an array
-  // search for each operator
-  // When the operator is found, grab the Operands
-  // store expression into an object, then store into array
-  // send each object to its relevant function
-  // finally combine the results into a a single int.
+  const operators = grabOperators(inputArr);
+  const messyExpressions = [];
+
+  operators.forEach((obj, index) => {
+    const expression = grabVal(inputArr, obj, index);
+    messyExpressions.push(expression);
+  })
+
+  console.log(messyExpressions);
 }
 
-function calculate(intOne, intTwo, operator) {
-  try {
-    errorHandler(intOne, intTwo, operator);
+function grabVal(arr, obj, objIndex) {
+  const index = obj.index;
+  let left, right;
+  let leftIndex = []
+  let rightIndex = []
 
-    switch (operator) {
-      case '+':
-        return add(intOne, intTwo);
-      case '-':
-        return subtract(intOne, intTwo);
-      case '*':
-        return multiply(intOne, intTwo);
-      case '/':
-        return divide(intOne, intTwo);
+  for (let i = index - 1; i >= 0; i--) {
+    if (Number(arr[i]) || arr[i] == '0') {
+      if (!left) {
+        left = arr[i];
+      } else if (left) {
+        left += arr[i];
+      }
+      leftIndex.push(arr[i])
+    } else {
+      break;
     }
-
-  } catch (err) {
-    alert(err.message);
   }
+
+  for (let i = index + 1; i < arr.length; i++) {
+    if (Number(arr[i]) || arr[i] == '0') {
+      if (!right) {
+        right = arr[i];
+      } else {
+        right += arr[i];
+      }
+      rightIndex.push(arr[i]);
+    } else {
+      break;
+    }
+  }
+
+  if (objIndex > 0) {
+    let leftArr = left.split('');
+    leftArr.reverse();
+    left = leftArr.join('');
+    leftIndex = leftIndex.reverse();
+  }
+
+  return {
+    leftOperand: {
+      value: left,
+      index: leftIndex,
+    },
+    rightOperand: {
+      value: right,
+      index: rightIndex,
+    },
+    operand: obj.operator,
+  };
 }
+
+
+function grabOperators(arr) {
+  const operators = [];
+
+  arr.forEach((item, index) => {
+    switch (item) {
+      case '+':
+        expression = {
+          operator: item,
+          index: index,
+        };
+        operators.push(expression);
+        break;
+      case '-':
+        expression = {
+          operator: item,
+          index: index,
+        };
+        operators.push(expression);
+        break;
+      case '*':
+        expression = {
+          operator: item,
+          index: index,
+        };
+        operators.push(expression);
+        break;
+      case '/':
+        expression = {
+          operator: item,
+          index: index,
+        };
+        operators.push(expression);
+        break;
+    };
+  });
+
+  return operators;
+}
+
+// function calculate(intOne, intTwo, operator) {
+//   try {
+//     errorHandler(intOne, intTwo, operator);
+
+//     switch (operator) {
+//       case '+':
+//         return add(intOne, intTwo);
+//       case '-':
+//         return subtract(intOne, intTwo);
+//       case '*':
+//         return multiply(intOne, intTwo);
+//       case '/':
+//         return divide(intOne, intTwo);
+//     }
+
+//   } catch (err) {
+//     alert(err.message);
+//   }
+// }
 
 function add(intOne, intTwo) {
   return intOne + intTwo;
@@ -94,7 +187,4 @@ operatorBtns.forEach(elem =>
     };
   }))
 
-console.log('add: ' + calculate(1, 2, '+'));
-console.log('subtract: ' + calculate(5, 3, '-'));
-console.log('multiply: ' + calculate(7, 2, '*'));
-console.log('divide: ' + calculate(6, 2, '/'));
+betterCalc('0+23+5-7');
