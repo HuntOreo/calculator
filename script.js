@@ -7,22 +7,46 @@ function betterCalc(input) {
   const inputStr = input;
   const inputArr = inputStr.split('');
   const operators = grabOperators(inputArr);
-  const messyExpressions = [];
+  const messyExprs = [];
 
   operators.forEach((obj, index) => {
     const expression = grabVal(inputArr, obj, index);
-    messyExpressions.push(expression);
+    messyExprs.push(expression);
   })
 
-  console.log(messyExpressions);
+  const cleanedExprs = cleanExpressions(messyExprs);
+  // console.log(cleanedExprs);
+
+  buildExpression(cleanedExprs);
+}
+
+function cleanExpressions(arr) {
+  arr.sort((a, b) => a.weight > b.weight);
+  return arr;
 }
 
 function grabVal(arr, obj, objIndex) {
   const index = obj.index;
-  let left, right;
+  let left, right, weight;
   let leftIndex = []
   let rightIndex = []
 
+  switch (obj.operator) {
+    case '*':
+      weight = 1;
+      break;
+    case '/':
+      weight = 2;
+      break;
+    case '+':
+      weight = 3;
+      break;
+    case '+':
+      weight = 4;
+      break;
+  }
+
+  // collect neighboring ints to form operand
   for (let i = index - 1; i >= 0; i--) {
     if (Number(arr[i]) || arr[i] == '0') {
       if (!left) {
@@ -66,6 +90,7 @@ function grabVal(arr, obj, objIndex) {
       index: rightIndex,
     },
     operand: obj.operator,
+    weight: weight
   };
 }
 
@@ -107,6 +132,13 @@ function grabOperators(arr) {
   });
 
   return operators;
+}
+
+function buildExpression(expressions) {
+  expressions.reduce((previous, current) => {
+    console.log(previous, current);
+    return {}
+  }, {});
 }
 
 // function calculate(intOne, intTwo, operator) {
@@ -187,4 +219,4 @@ operatorBtns.forEach(elem =>
     };
   }))
 
-betterCalc('0+23+5-7');
+betterCalc('0+23+5/7-7');
