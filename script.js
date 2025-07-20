@@ -1,6 +1,8 @@
 const delBtn = document.querySelector('.del');
 const intBtns = document.querySelectorAll('.int');
 const operatorBtns = document.querySelectorAll('.operator');
+let currentOperator = '';
+let _OPERAND_ONE, _OPERANDtWO = null;
 
 function calculate(intOne, intTwo, operator) {
   try {
@@ -64,6 +66,30 @@ function deleteVal() {
   displayElms.innerText = displayArr.join('');
 }
 
+function handleOperator(elem) {
+  const operator = elem.innerText;
+  if (typeof _OPERAND_ONE !== 'number') {
+    const input = document.querySelector('.display .value').innerText;
+    const justNum = input.substring(0, input.length - 1);
+    renderInputs(elem);
+
+    _OPERAND_ONE = Number(justNum);
+  } else {
+    let input = document.querySelector('.display .value').innerText;
+    renderInputs(elem);
+
+    const arr = input.split(operator);
+    const valueOne = Number(arr[0]);
+    const valueTwo = Number(arr[1]);
+
+    const result = calculate(valueOne, valueTwo, operator);
+    _OPERAND_ONE = result;
+
+    input = document.querySelector('.display .value');
+    input.innerText = `${result}${elem.innerText}`;
+  }
+}
+
 function renderInputs(elem) {
   const value = elem.innerText;
   const display = document.querySelector('.display .value');
@@ -74,7 +100,7 @@ delBtn.addEventListener('click', (event) => deleteVal(event.target));
 intBtns.forEach(elem =>
   elem.addEventListener('click', (event) => renderInputs(event.target)));
 operatorBtns.forEach(elem =>
-  elem.addEventListener('click', (event) => renderInputs(event.target)))
+  elem.addEventListener('click', (event) => handleOperator(event.target)))
 
 console.log('add: ' + calculate(1, 2, '+'));
 console.log('subtract: ' + calculate(5, 3, '-'));
