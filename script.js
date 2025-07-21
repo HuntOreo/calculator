@@ -78,11 +78,11 @@ function handleOperator(elem) {
 
     const result = calculate(operandOne, operandTwo, _CURRENT_OPERATOR);
 
-    console.dir(input);
-    _PREVIOUS_RESULT = Number(result);
+    _CURRENT_OPERATOR = null;
+    _PREVIOUS_RESULT = null;
 
     input = document.querySelector('.display .value')
-    input.innerText = `${result}${_CURRENT_OPERATOR}`;
+    input.innerText = `${result}`;
     return;
   }
 
@@ -102,9 +102,8 @@ function handleOperator(elem) {
     const operandOne = Number(arr[0]);
     const operandTwo = Number(arr[1]);
 
-    const result = calculate(operandOne, operandTwo, _CURRENT_OPERATOR);
-
     _CURRENT_OPERATOR = operator;
+    const result = calculate(operandOne, operandTwo, _CURRENT_OPERATOR);
     _PREVIOUS_RESULT = result;
 
     input = document.querySelector('.display .value');
