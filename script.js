@@ -1,8 +1,8 @@
 const delBtn = document.querySelector('.del');
 const intBtns = document.querySelectorAll('.int');
 const operatorBtns = document.querySelectorAll('.operator');
-let currentOperator = '';
-let _OPERAND_ONE, _OPERANDtWO = null;
+let _CURRENT_OPERATOR = null;
+let _PREVIOUS_RESULT = null;
 
 function calculate(intOne, intTwo, operator) {
   try {
@@ -68,25 +68,48 @@ function deleteVal() {
 
 function handleOperator(elem) {
   const operator = elem.innerText;
-  if (typeof _OPERAND_ONE !== 'number') {
+
+  if (operator == '=') {
+    let input = document.querySelector('.display .value').innerText;
+    renderInputs(elem);
+
+    const arr = input.split(_CURRENT_OPERATOR);
+    const operandOne = Number(arr[0]);
+    const operandTwo = Number(arr[1]);
+
+    const result = calculate(operandOne, operandTwo, _CURRENT_OPERATOR);
+
+    console.dir(input);
+    _PREVIOUS_RESULT = Number(result);
+
+    input = document.querySelector('.display .value')
+    input.innerText = `${result}${_CURRENT_OPERATOR}`;
+    return;
+  }
+
+  if (typeof _PREVIOUS_RESULT !== 'number') {
     const input = document.querySelector('.display .value').innerText;
     const justNum = input.substring(0, input.length - 1);
     renderInputs(elem);
 
-    _OPERAND_ONE = Number(justNum);
+    _CURRENT_OPERATOR = operator;
+    _PREVIOUS_RESULT = Number(justNum);
+
   } else {
     let input = document.querySelector('.display .value').innerText;
     renderInputs(elem);
 
-    const arr = input.split(operator);
-    const valueOne = Number(arr[0]);
-    const valueTwo = Number(arr[1]);
+    const arr = input.split(_CURRENT_OPERATOR);
+    const operandOne = Number(arr[0]);
+    const operandTwo = Number(arr[1]);
 
-    const result = calculate(valueOne, valueTwo, operator);
+    const result = calculate(operandOne, operandTwo, _CURRENT_OPERATOR);
+
+    _CURRENT_OPERATOR = operator;
     _OPERAND_ONE = result;
 
     input = document.querySelector('.display .value');
-    input.innerText = `${result}${elem.innerText}`;
+    input.innerText = `${result}${_CURRENT_OPERATOR}`;
   }
 }
 
@@ -101,8 +124,3 @@ intBtns.forEach(elem =>
   elem.addEventListener('click', (event) => renderInputs(event.target)));
 operatorBtns.forEach(elem =>
   elem.addEventListener('click', (event) => handleOperator(event.target)))
-
-console.log('add: ' + calculate(1, 2, '+'));
-console.log('subtract: ' + calculate(5, 3, '-'));
-console.log('multiply: ' + calculate(7, 2, '*'));
-console.log('divide: ' + calculate(6, 2, '/'));
