@@ -60,10 +60,9 @@ function errorHandler(intOne, intTwo, operator) {
 
 function deleteVal() {
   const displayElms = document.querySelector('.display .value');
-  const displayArr = displayElms.innerText.split('');
-
-  displayArr.pop();
-  displayElms.innerText = displayArr.join('');
+  displayElms.innerText = '';
+  _CURRENT_OPERATOR = null;
+  _PREVIOUS_RESULT = null;
 }
 
 function handleOperator(elem) {
@@ -106,7 +105,7 @@ function handleOperator(elem) {
     const result = calculate(operandOne, operandTwo, _CURRENT_OPERATOR);
 
     _CURRENT_OPERATOR = operator;
-    _OPERAND_ONE = result;
+    _PREVIOUS_RESULT = result;
 
     input = document.querySelector('.display .value');
     input.innerText = `${result}${_CURRENT_OPERATOR}`;
